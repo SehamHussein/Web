@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity{
     String sortByVariable;
     public static final String ReleaseDateAsc = "release_date.asc";
     public static final String PopularityAsc = "popularity.des";
-
+    String year;
+    EditText editText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity{
         radioGroup=(RadioGroup) findViewById(R.id.radioGroup);
         listMovie = (ListView) findViewById(R.id.listMovie);
         search = (Button) findViewById(R.id.btnSearch);
+        editText=(EditText) findViewById(R.id.editText) ;
+
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,12 +77,14 @@ public class MainActivity extends AppCompatActivity{
                 switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.popularAsc:
                         sortByVariable = PopularityAsc;
+                        year=editText.getText().toString();
                         break;
                     case R.id.releaseAsc:
                         sortByVariable = ReleaseDateAsc;
+                        year=editText.getText().toString();
                         break;
                 }
-                String url = "http://api.themoviedb.org/3/discover/movie?api_key=be32430c9f675ed7df41fbeda2a0525a&language=en-US&sort_by=" + sortByVariable + "&page=1";
+                String url = "http://api.themoviedb.org/3/discover/movie?api_key=be32430c9f675ed7df41fbeda2a0525a&language=en-US&sort_by=" + sortByVariable + "&page=1&year="+year;
                 executeWebService(url);
             }
         });
