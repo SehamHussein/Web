@@ -1,10 +1,46 @@
 package com.example.pc.web.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by pc on 30/09/2017.
  */
 
-public class MovieModel {
+public class MovieModel implements Serializable {
+    String name="";
+    private String number="";
+    private String address="";
+    private static final long serialVersionUID = 46543445;
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setNumber(String number)
+    {
+        this.number = number;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public String getNumber()
+    {
+        return number;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
 
     int vote_count,id;
     Boolean video;

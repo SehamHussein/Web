@@ -23,16 +23,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity{
 
     ListView listMovie;
     Button search;
     RadioGroup radioGroup;
     String sortByVariable;
     public static final String ReleaseDateAsc = "release_date.asc";
-    public static final String ReleaseDateDes = "release_date.asc";
     public static final String PopularityAsc = "popularity.des";
-    public static final String PopularityDes = "popularity.des";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,24 +63,19 @@ public class MainActivity extends AppCompatActivity {
 //// Add the request to the RequestQueue.
 //        queue.add(stringRequest);
 
-listMovie=(ListView) findViewById(R.id.listMovie);
-        search=(Button) findViewById(R.id.btnSearch);
+        radioGroup=(RadioGroup) findViewById(R.id.radioGroup);
+        listMovie = (ListView) findViewById(R.id.listMovie);
+        search = (Button) findViewById(R.id.btnSearch);
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (radioGroup.getCheckedRadioButtonId()) {
                     case R.id.popularAsc:
-                        sortByVariable =PopularityAsc;
-                        break;
-                    case R.id.popularDes:
-                        sortByVariable =PopularityDes;
+                        sortByVariable = PopularityAsc;
                         break;
                     case R.id.releaseAsc:
-                        sortByVariable =ReleaseDateAsc;
-                        break;
-                    case R.id.releaseDes:
-                        sortByVariable =ReleaseDateDes;
+                        sortByVariable = ReleaseDateAsc;
                         break;
                 }
                 String url = "http://api.themoviedb.org/3/discover/movie?api_key=be32430c9f675ed7df41fbeda2a0525a&language=en-US&sort_by=" + sortByVariable + "&page=1";
@@ -111,12 +106,13 @@ listMovie=(ListView) findViewById(R.id.listMovie);
                             MovieAdapter movieAdapter = new MovieAdapter(MainActivity.this, movieModel);
                             listMovie.setAdapter(movieAdapter);
                             listMovie.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                                 @Override
-                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
 //                                    Toast.makeText(MainActivity.this, movieModel[i].getTitle(), Toast.LENGTH_SHORT).show();
 
-                                    Intent intent=new Intent(MainActivity.this,Details.class);
-
+                                    Intent intent = new Intent(MainActivity.this, Details.class);
+                                    intent.putExtra("movieModel", (Serializable) movieModel[i]);
                                     startActivity(intent);
                                 }
                             });
